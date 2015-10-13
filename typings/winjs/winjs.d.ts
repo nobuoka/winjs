@@ -9124,6 +9124,18 @@ declare module WinJS.UI.Pages {
 
     }
 
+    interface IPageControl extends IPageControlMembers {
+        element: HTMLElement;
+        elementReady: IPromise<HTMLElement>;
+        uri: string;
+        selfhost: boolean;
+        dispose(): void;
+    }
+
+    interface IPageControlConstructor {
+        new (element?: HTMLElement, options?: any, complete?: (page: IPageControl) => void, parentedPromise?: IPromise<any>): IPageControl;
+    }
+
     //#endregion Interfaces
 
     //#region Objects
@@ -9138,14 +9150,14 @@ declare module WinJS.UI.Pages {
      * @param members An object that defines the members that the control will have.
      * @returns A constructor function that creates the PageControl.
     **/
-    function define(uri: string, members: IPageControlMembers): (element?: HTMLElement, options?: any, complete?: (page: any) => void, parentedPromise?: Promise<any>) => void;
+    function define(uri: string, members: IPageControlMembers): IPageControlConstructor;
 
     /**
      * Gets an already-defined page control for the specified URI, or creates a new one.
      * @param uri The URI for the content that defines the page.
      * @returns A constructor function that creates the page.
     **/
-    function get(uri: string): (element?: HTMLElement, options?: any, complete?: (page: any) => void, parentedPromise?: Promise<any>) => void;
+    function get(uri: string): IPageControlConstructor;
 
     /**
      * Creates a PageControl from the specified URI and inserts it inside the specified element.
